@@ -12,6 +12,15 @@ struct restraunt
 	int rx,ry,size;
 	struct orders order[5];
 };
+swap(struct orders *a,struct orders *b)
+{
+	struct orders temp;
+	temp=*a;
+	*a=*b;
+	*b=temp;
+}
+	
+	
 //void enterorder()
 int main()
 {
@@ -54,28 +63,33 @@ int main()
 	//initiallizing first 3 array elements as restraunts.... here value of dhaba denotes restraunt number
 	for(i=0;i<3;i++)
 {
-	arr[i].dhaba=i;
-	arr[i].ox=res[i].rx;
-	arr[i].oy=res[i].ry;
+	arr[i]->dhaba=i;
+	arr[i]->ox=res[i].rx;
+	arr[i]->oy=res[i].ry;
 	
 }	
 	//initiallizing minimum dis...possible min dis will be less than this only
 	int min_dis=100000;
 	int local_min=0;
 	//struct orders *ans[15];
-	int ans[30],int temp_ans[30];
-	ans=permute(arr,&min_dis,res,temp_ans,&ans,0,3,local_min,sx,sy);
-	
+	int ans[30], temp_ans[30];
+	permute(arr,&min_dis,res,temp_ans,&ans,0,3,local_min,sx,sy,no);
+	int size=sizeof(ans)/sizeof(ans[0]);
+	for(i=0;i<size;i++)
+	{
+	printf("%d %d\n",ans[i],ans[i+1]);
+	i++;
+	}
 	
 }
 // arr[] is array of struct orders, min dis is overall min dis,res is array of restraunts
 //temp_ans is array containing cordinates in a particular permute/branch, ans[] is final ans containing cordinates of req path
 // l,r are starting and ending point for permutation, local_min is min dist in a particular permute/branch,
-// sx and sy are cordinates of starting/current position
-int * permute(struct orders arr[],int *min_dis,struct restraunt res[3],int temp_ans[],int *ans[],int l,int r,int local_min,int sx,int sy)
+// sx and sy are cordinates of starting/current position,no is no of orders from a res
+void permute(struct orders arr[],int *min_dis,struct restraunt res[3],int temp_ans[],int *ans[],int l,int r,int local_min,int sx,int sy,int no[3])
 {
 	int i;
-	if(arr[l].dhaba==-1)
+	if(arr[l]->dhaba==-1)
 {	if(l==r)
 	{
 		if(local_min<min_dis)
@@ -86,30 +100,50 @@ int * permute(struct orders arr[],int *min_dis,struct restraunt res[3],int temp_
 	}
 	else
 	{
-		local_min+=abs(arr[l].ox-sx)+abs(arr[l].oy-sy);
+		int z=sizeof(temp_ans)/sizeof(temp_ans[0]);
+		temp_ans[z]=arr[l].ox;
+		temp_ans[z+1]=arr[l].oy;
+		local_min+=abs(arr[l]->ox-sx)+abs(arr[l]->oy-sy);
 		sx=arr[l].ox;
 		sy=arr[l].oy;
 		for(i=l;i<=r;i++)
                   {
-			swap(arr[l],arr[i]);
-			permute(arr,&min_dis,res,temp_ans,&ans,l+1,r,local_min,sx,sy);
-			swap(arr[l],arr[i]);
+			swap(&arr[l],&arr[i]);
+			permute(arr,&min_dis,res,temp_ans,&ans,l+1,r,local_min,sx,sy,no);
+			swap(&arr[l],&arr[i]);
                   }
 		
 		
 	}
-}//if condition for dhaba	
+}//if condition for dhaba
+// new loop if value of array 	
 	else
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	{
+		int z=sizeof(temp_ans)/sizeof(temp_ans[0]);
+		temp_ans[z]=arr[l].ox;
+		temp_ans[z+1]=arr[l].oy;
+
+		int index=arr[l].dhaba,i;
+		int size=sizeof(arr)/sizeof(arr[0]);
+		for(i=0;i<no[index];i++)
+		{
+			arr[size+i]=res[index].order[i];
+			r++;
+			
+			
+		}
+		local_min+=abs(arr[l]->ox-sx)+abs(arr[l]->oy-sy);
+		sx=arr[l].ox;
+		sy=arr[l].oy;
+		for(i=l;i<=r;i++)
+                  {
+			swap(&arr[l],&arr[i]);
+			permute(arr,&min_dis,res,temp_ans,&ans,l+1,r,local_min,sx,sy,no);
+			swap(&arr[l],&arr[i]);
+                  }
+		
+	}
+		
 }
 	
 	
