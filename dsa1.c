@@ -81,10 +81,10 @@ if(elem_in_arr>0)
 		//printf("%d ",elem_in_arr);
 		for(i=l;i<=r;i++)
                   {
-			swap(&arr[l],&arr[i]);
+			swap(&dummy[l],&dummy[i]);
 			
 			permute(dummy,min_dis,res,temp_ans,ans,0,r,local_min,sx,sy,no,temp_ans_length,elem_in_arr);
-			swap(&arr[l],&arr[i]);
+			swap(&dummy[l],&dummy[i]);
                   }
 		
 		
@@ -125,11 +125,11 @@ if(elem_in_arr>0)
 		sy=arr[l].oy;
 		printf("local_min=%d\n",local_min);
 		//printf("new l=%d new r=%d\n",l,r);
-		for(i=l;i<=r;i++)
+		for(i=l;i<r;i++)
                   {
-			swap(&arr[l],&arr[i]);
+			swap(&dummy[l],&dummy[i]);
 			permute(dummy,min_dis,res,temp_ans,ans,0,r,local_min,sx,sy,no,temp_ans_length,elem_in_arr);
-			swap(&arr[l],&arr[i]);
+			swap(&dummy[l],&dummy[i]);
                   }
 		
 	}
