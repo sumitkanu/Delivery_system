@@ -71,7 +71,7 @@ if(elem_in_arr>0)
 		r--;
 		//pr
 		if(local_min<*min_dis)
-		{	printf("SEXY  temp_ans_len=%d\n",*temp_ans_length);
+		{	printf(" temp_ans_len=%d\n",*temp_ans_length);
 			*min_dis=local_min;
 			for(i=0;i<*temp_ans_length;i++)
 			{ans[i]=temp_ans[i];
