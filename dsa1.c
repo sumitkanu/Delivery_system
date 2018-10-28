@@ -35,7 +35,7 @@ void swap(struct orders *a,struct orders *b)
 //temp_ans is array containing cordinates in a particular permute/branch, ans[] is final ans containing cordinates of req path
 // l,r are starting and ending point for permutation, local_min is min dist in a particular permute/branch,
 // sx and sy are cordinates of starting/current position,no is no of orders from a res
-void permute(struct orders arr[],int *min_dis,struct restraunt res[3],int temp_ans[],int ans[],int l,int r,int local_min,int sx,int sy,int no[3],int temp_ans_length,int elem_in_arr)
+void permute(struct orders arr[],int *min_dis,struct restraunt res[3],int temp_ans[],int ans[],int l,int r,int local_min,int sx,int sy,int no[3],int *temp_ans_length,int elem_in_arr)
 
 {	int i;
 	printf("\nNEW PERMUTE\n");
@@ -60,9 +60,9 @@ if(elem_in_arr>0)
 	if(l==r)
 	{	//printf("local min dis=%d\n",*temp_ans);
 		if(local_min<*min_dis)
-		{	printf("SEXY  temp_ans_len=%d\n",temp_ans_length);
+		{	printf("SEXY  temp_ans_len=%d\n",*temp_ans_length);
 			*min_dis=local_min;
-			for(i=0;i<temp_ans_length;i++)
+			for(i=0;i<*temp_ans_length;i++)
 			{ans[i]=temp_ans[i];
 			printf("%d\n",ans[i]); }
 		}
@@ -70,10 +70,10 @@ if(elem_in_arr>0)
 	else
 	{
 		//printf("ABHI ");
-		int z=temp_ans_length;
+		int z=*temp_ans_length;
 		temp_ans[z]=arr[l].ox;
 		temp_ans[z+1]=arr[l].oy;
-		temp_ans_length =temp_ans_length +2;
+		(*temp_ans_length) =(*temp_ans_length) +2;
 		local_min+=abs(arr[l].ox-sx)+abs(arr[l].oy-sy);
 		sx=arr[l].ox;
 		sy=arr[l].oy;
@@ -95,11 +95,11 @@ if(elem_in_arr>0)
 	else
 	{
 		//printf("Location of pickup %d %d %d \n",arr[l].dhaba,arr[l].ox,arr[l].oy);
-		int z=temp_ans_length;
+		int z=*temp_ans_length;
 		//printf (" z==%d\n",z); 
 		temp_ans[z]=arr[l].ox;
 		temp_ans[z+1]=arr[l].oy;
-		temp_ans_length =temp_ans_length+2;
+		(*temp_ans_length) =(*temp_ans_length)+2;
 		//printf("sumit %d\n",temp_ans[z]);
 		int index=arr[l].dhaba,i;
 		elem_in_arr--;
@@ -185,9 +185,9 @@ int main()
 	{
 	if(no[i]>0)
 	{
-	arr[i].dhaba=i;
-	arr[i].ox=res[i].rx;
-	arr[i].oy=res[i].ry;
+	arr[elem_in_arr].dhaba=i;
+	arr[elem_in_arr].ox=res[i].rx;
+	arr[elem_in_arr].oy=res[i].ry;
 	elem_in_arr++;
 	}
 	}
@@ -202,10 +202,11 @@ int main()
 	
 	//struct orders *ans[15];
 	int ans[30], temp_ans[30];
-	permute(arr,&min_dis,res,temp_ans,ans,0,elem_in_arr-1,local_min,sx,sy,no,temp_ans_length,elem_in_arr);
+	permute(arr,&min_dis,res,temp_ans,ans,0,elem_in_arr-1,local_min,sx,sy,no,&temp_ans_length,elem_in_arr);
 	//printf("Comment 2\n");	
 	int size=sizeof(ans)/sizeof(ans[0]);
-	for(i=0;i<size;i++)
+	printf("Temp ans len=%d\n",temp_ans_length);
+	for(i=0;i<temp_ans_length;i++)
 	{
 	printf("\n sabbey %d %d\n",ans[i],ans[i+1]);
 	i++;
