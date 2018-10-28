@@ -38,7 +38,7 @@ void swap(struct orders *a,struct orders *b)
 void permute(struct orders arr[],int *min_dis,struct restraunt res[3],int temp_ans[],int ans[],int l,int r,int local_min,int sx,int sy,int no[3],int temp_ans_length,int elem_in_arr)
 
 {	int i;
-	
+	printf("\nNEW PERMUTE\n");
 	struct orders dummy[15];
 	for(i=0;i<elem_in_arr;i++)
 {	dummy[i]=arr[i];
@@ -50,17 +50,17 @@ void permute(struct orders arr[],int *min_dis,struct restraunt res[3],int temp_a
 
 	//printf("Enter permute\n");
 	//int i;
-	//printf("%d ",arr[l].dhaba);
+	printf("boom %d \n",dummy[l].dhaba);
 	//if(arr[l].dhaba==-1)
 if(elem_in_arr>0)
-{	if(arr[l].dhaba!=0&&arr[l].dhaba!=1 &&arr[l].dhaba!=2)
-	//if(arr[l].dhaba==-1)
+{	//if(arr[l].dhaba!=0&&arr[l].dhaba!=1 &&arr[l].dhaba!=2)
+	if(arr[0].dhaba==-1)
 {	printf("bla %d \n",arr[l].dhaba);
 	//printf("Location of delivery %d %d %d \n",arr[l].dhaba,arr[l].ox,arr[l].oy);
 	if(l==r)
 	{	//printf("local min dis=%d\n",*temp_ans);
 		if(local_min<*min_dis)
-		{
+		{	printf("SEXY  temp_ans_len=%d\n",temp_ans_length);
 			*min_dis=local_min;
 			for(i=0;i<temp_ans_length;i++)
 			{ans[i]=temp_ans[i];
@@ -73,21 +73,23 @@ if(elem_in_arr>0)
 		int z=temp_ans_length;
 		temp_ans[z]=arr[l].ox;
 		temp_ans[z+1]=arr[l].oy;
+		temp_ans_length =temp_ans_length +2;
 		local_min+=abs(arr[l].ox-sx)+abs(arr[l].oy-sy);
 		sx=arr[l].ox;
 		sy=arr[l].oy;
-		
+		r--;
 		//printf("%d ",elem_in_arr);
 		for(i=l;i<=r;i++)
                   {
 			swap(&arr[l],&arr[i]);
-			permute(dummy,min_dis,res,temp_ans,ans,l+1,r,local_min,sx,sy,no,temp_ans_length,elem_in_arr);
+			
+			permute(dummy,min_dis,res,temp_ans,ans,0,r,local_min,sx,sy,no,temp_ans_length,elem_in_arr);
 			swap(&arr[l],&arr[i]);
                   }
 		
 		
 	}
-	temp_ans_length ++;
+	
 }//if condition for dhaba
 // new loop if value of array 	
 	else
@@ -97,19 +99,20 @@ if(elem_in_arr>0)
 		//printf (" z==%d\n",z); 
 		temp_ans[z]=arr[l].ox;
 		temp_ans[z+1]=arr[l].oy;
+		temp_ans_length =temp_ans_length+2;
 		//printf("sumit %d\n",temp_ans[z]);
 		int index=arr[l].dhaba,i;
 		elem_in_arr--;
 		//r--;////****************************************CHECK ITS VALIDITY************************
-		//printf("%d ",elem_in_arr);
-
+		printf("elem = %d ",elem_in_arr);
+		printf("INDEX = %d\n",index);
 		for(i=0;i<no[index];i++)
 		{	//printf(" hoola %d\n",i);
 			//printf("Abhi %d\n",res[index].order[i].dhaba);
 			printf("SRK %d\n",no[index]); 
-			arr[elem_in_arr].ox=res[index].order[i].ox;
-			arr[elem_in_arr].oy=res[index].order[i].oy;
-			arr[elem_in_arr].dhaba=-1;
+			dummy[elem_in_arr].ox=res[index].order[i].ox;
+			dummy[elem_in_arr].oy=res[index].order[i].oy;
+			dummy[elem_in_arr].dhaba=-1;
 			r++;
 			elem_in_arr++;
 			//printf("r=%d , %d\n",r,arr[elem_in_arr-1].dhaba);
@@ -120,12 +123,12 @@ if(elem_in_arr>0)
 		local_min+=(abs(arr[l].ox-sx)+abs(arr[l].oy-sy));
 		sx=arr[l].ox;
 		sy=arr[l].oy;
-		temp_ans_length =temp_ans_length+2;
+		printf("local_min=%d\n",local_min);
 		//printf("new l=%d new r=%d\n",l,r);
 		for(i=l;i<=r;i++)
                   {
 			swap(&arr[l],&arr[i]);
-			permute(dummy,min_dis,res,temp_ans,ans,l+1,r,local_min,sx,sy,no,temp_ans_length,elem_in_arr);
+			permute(dummy,min_dis,res,temp_ans,ans,0,r,local_min,sx,sy,no,temp_ans_length,elem_in_arr);
 			swap(&arr[l],&arr[i]);
                   }
 		
@@ -204,7 +207,7 @@ int main()
 	int size=sizeof(ans)/sizeof(ans[0]);
 	for(i=0;i<size;i++)
 	{
-	//printf("\n sabbey %d %d\n",ans[i],ans[i+1]);
+	printf("\n sabbey %d %d\n",ans[i],ans[i+1]);
 	i++;
 	}
 	printf("min=%d\n",min_dis);
