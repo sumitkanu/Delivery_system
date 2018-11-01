@@ -198,6 +198,14 @@ int main()
 	int elem_in_arr=0;
 	//printf("Comment 0.1\n");
 	//initiallizing first 3 array elements as restraunts.... here value of dhaba denotes restraunt number
+	//if(no[0]==0)
+	{
+	arr[elem_in_arr].dhaba=-1;
+	arr[elem_in_arr].ox=0;
+	arr[elem_in_arr].oy=0;
+	elem_in_arr++;
+	total_locations++;
+	}
 	for(i=0;i<3;i++)
 	{
 	if(no[i]>0)
